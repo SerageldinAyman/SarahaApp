@@ -11,7 +11,7 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
+      unique: [true, "Email already exists!"],
       lowercase: true,
       match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
     },

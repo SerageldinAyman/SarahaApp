@@ -2,18 +2,25 @@ import User from "../../DB/models/user.model.js";
 
 export const register = async (req, res) => {
   try {
-    const { email, password, phone, userName } = req.body;
+    const { email, password, phone, userName, isconfirmed } = req.body;
+
+    if (password !== isconfirmed)
+      return res
+        .status(400)
+        .json({ success: false, message: "password must match!" });
+
     const user = await User.create({ email, password, phone, userName });
 
     return res.status(201).json({
       success: true,
-      result: user,
+      result: { user },
     });
   } catch (error) {
     return res.status(500).json({
       success: false,
       message: error.message,
       stack: error.stack,
+      error,
     });
   }
 };
