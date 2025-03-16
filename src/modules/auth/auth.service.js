@@ -4,6 +4,7 @@ export const register = async (req, res) => {
   try {
     const { email, password, phone, userName, confirmpassword } = req.body;
 
+    // just to make sure that the user write the password correctly
     if (password !== confirmpassword)
       return res
         .status(400)
@@ -20,7 +21,6 @@ export const register = async (req, res) => {
       success: false,
       message: error.message,
       stack: error.stack,
-      error,
     });
   }
 };

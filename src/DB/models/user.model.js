@@ -13,12 +13,15 @@ const userSchema = new Schema(
       required: true,
       unique: [true, "Email already exists!"],
       lowercase: true,
-      match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+      match: [
+        /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com)$/,
+        "Only gmail/yahoo accepted domians",
+      ],
     },
     password: { type: String, required: true },
     userName: {
       type: String,
-      minlength: 5,
+      minlength: [3, "userName should be at least 3 letters"],
       maxlength: 15,
       /**
        * لو مش هخلي اليوزرنيم ريكويرد لازم يبقى في بديل تاني انه يبقى جينيريتيد وساعتها يبقى يونيك
