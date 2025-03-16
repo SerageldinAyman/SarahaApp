@@ -2,10 +2,10 @@ import User from "../../DB/models/user.model.js";
 
 export const register = async (req, res) => {
   try {
-    const { email, password, phone, userName, confirmpassword } = req.body;
+    const { email, password, phone, userName, confirmPassword } = req.body;
 
     // just to make sure that the user write the password correctly
-    if (password !== confirmpassword)
+    if (password !== confirmPassword)
       return res
         .status(400)
         .json({ success: false, message: "password must match!" });
