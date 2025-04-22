@@ -1,55 +1,56 @@
-import { Schema, model } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 
-export const genders = {
-  male: "male",
-  female: "female",
-};
-
-//schema
 const userSchema = new Schema(
   {
+    userName: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     email: {
       type: String,
       required: true,
-      unique: [true, "Email already exists!"],
-      lowercase: true,
-      match: [
-        /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com)$/,
-        "Only gmail/yahoo accepted domians",
-      ],
-    },
-    password: { type: String, required: true },
-    userName: {
-      type: String,
-      minlength: [3, "userName should be at least 3 letters"],
-      maxlength: 15,
-      /**
-       * لو مش هخلي اليوزرنيم ريكويرد لازم يبقى في بديل تاني انه يبقى جينيريتيد وساعتها يبقى يونيك
-       */
       unique: true,
-      required: true,
     },
-    isActivated: { type: Boolean, default: false },
-    /**
-     * phone type => string
-     * عشان انا مش هعمل عليه عمليات حسابية
-     * انه لما بكتب كود البلد هيببقى فيه علامة الزائد
-     * اني لو كتبت الرقم اوله زيرو هيطير ومش هيتكتب فى الداتابيز
-     */
-    phone: {
+    password: {
       type: String,
-      required: true /*3shan lw masaln el client 3ayez ye3ml auth bel phoneNumber*/,
+      required: true,
     },
     gender: {
       type: String,
-      /* ana hena shelt el [] 3shan object.values btrg3 array of values */
-      enum: Object.values(genders),
+      default: "male",
+      enum: ["male", "female"],
     },
+    status: {
+      type: String,
+      default: "offline",
+      enum: ["online", "offline", "blocked"],
+    },
+    confirmEmail: {
+      type: Boolean,
+      default: false,
+    },
+    role: {
+      type: String,
+      default: "user",
+      enum: ["user", "admin"],
+    },
+    profileImage:
+    {
+      type: String
+    },
+    profileImageId:
+    {
+      type: String
+    },
+    coverImages:
+    {
+      type:Array
+    }
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
-
-//model
-const User = model("User", userSchema);
-
-export default User;
+const userModel = mongoose.models.User || model("User", userSchema);
+export default userModel;

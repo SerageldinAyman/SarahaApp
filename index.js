@@ -1,9 +1,13 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 import express from "express";
-import bootstrap from "./src/app.controller.js";
+import bootstrap from "./src/app.router.js";
 
 const app = express();
 const port = process.env.PORT;
 
-await bootstrap(app, express);
+bootstrap(app, express);
 
-app.listen(port, () => console.log(`Saraha app listening on port ${port}!`));
+app.listen(port, () => {
+  console.log(`Server is running on port.......${port}`);
+});
